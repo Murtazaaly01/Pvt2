@@ -32,16 +32,16 @@ def getleechinfo(from_user):
     else:
         ltype = "MEDIA"
         buttons.sbutton("Send As Document", f"doc {user_id}")
-    
+
     if os.path.exists(thumbpath):
         thumbmsg = "Exists"
         buttons.sbutton("Delete Thumbnail", f"thumb {user_id}")
     else:
         thumbmsg = "Not Exists"
-    
+
     if AUTO_DELETE_MESSAGE_DURATION == -1:
         buttons.sbutton("Close", f"closeset {user_id}")
-    
+
     button = InlineKeyboardMarkup(buttons.build_menu(1))
 
     text = f"<u>Leech Settings for <a href='tg://user?id={user_id}'>{name}</a></u>\n"\
@@ -102,7 +102,7 @@ def setThumb(update, context):
             os.mkdir(path)
         photo_msg = app.get_messages(update.message.chat.id, reply_to_message_ids=update.message.message_id)
         photo_dir = app.download_media(photo_msg, file_name=path)
-        des_dir = os.path.join(path, str(user_id) + ".jpg")
+        des_dir = os.path.join(path, f"{str(user_id)}.jpg")
         img = Image.open(photo_dir)
         img.thumbnail((480, 320))
         img.save(des_dir, "JPEG")
